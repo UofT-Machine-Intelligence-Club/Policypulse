@@ -7,6 +7,7 @@ Predict market impact of Donald Trump posts (Twitter era + Truth Social) by fine
 - `overview.ipynb` — detailed model training guide (FinBERT + features, labeling, evaluation).
 - `scripts/fetch_truth_social.py` — fetch and normalize the CNN Truth Social archive into CSV/parquet.
 - `scripts/fetch_daily_market.py` — download daily OHLCV for core ETFs, sector ETFs, and VIX into parquet.
+- `scripts/clean_posts_text.py` — phase 2.1 text cleaning for Twitter and Truth Social posts.
 
 ## Data note
 - Twitter corpus is intentionally limited to the in-office period (2017-01-20 to 2021-01-08); pre-office tweets are out of scope for this project.
@@ -28,6 +29,13 @@ Predict market impact of Donald Trump posts (Twitter era + Truth Social) by fine
 - `python scripts/fetch_daily_market.py`
 	- Downloads daily OHLCV starting 2009-01-01 for SPY, QQQ, DIA; sector ETFs XLU/XLB/XLK/XLI/XLF/XLE/XLP/XLY/XLC/SMH; and ^VIX.
 	- Saves per-ticker parquet files under `data/processed/market/daily/` with columns ticker, date (UTC), open/high/low/close/adj_close/volume.
+
+### Run phase 2.1 text cleaning
+- `pip install pandas`
+- `python scripts/clean_posts_text.py`
+	- Removes URLs, strips `@`/`#` symbols while keeping token text, drops non-ASCII noise, and normalizes whitespace.
+	- Preserves cleaned original case in `text_clean`, adds lowercase companion `text_lower`, and flags ALL CAPS usage.
+	- Writes `data/processed/tweets_cleaned.parquet` and `data/processed/truth_social_posts_cleaned.parquet`.
 
 ## Project scope (high level)
 - Collect and clean Trump tweets (2009–2021) and Truth Social posts (2022–present).

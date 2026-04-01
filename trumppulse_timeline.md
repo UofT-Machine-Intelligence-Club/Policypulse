@@ -44,12 +44,12 @@
 ## Phase 2: Data cleaning and unification
 
 ### 2.1 Text cleaning
-- [ ] Remove URLs from all post text
-- [ ] Remove @mentions and hashtag symbols (keep the text after # and @)
-- [ ] Remove special characters, emojis, and non-ASCII noise
-- [ ] Normalize whitespace (collapse multiple spaces, strip leading/trailing)
-- [ ] Handle ALL CAPS posts — decide whether to lowercase everything or keep case as a feature
-- [ ] Flag and handle posts that are just media shares with no meaningful text (drop or label separately)
+- [x] Remove URLs from all post text
+- [x] Remove @mentions and hashtag symbols (keep the text after # and @)
+- [x] Remove special characters, emojis, and non-ASCII noise
+- [x] Normalize whitespace (collapse multiple spaces, strip leading/trailing)
+- [x] Handle ALL CAPS posts — decide whether to lowercase everything or keep case as a feature
+- [x] Flag and handle posts that are just media shares with no meaningful text (drop or label separately)
 
 ### 2.2 Schema unification
 - [ ] Create a unified post schema: post_id, datetime (UTC), text, source_platform (twitter/truthsocial), likes, shares, engagement (likes + shares), device, text_length
