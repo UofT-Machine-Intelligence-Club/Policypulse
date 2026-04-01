@@ -20,10 +20,23 @@ SECTOR_TICKERS: Iterable[str] = ["XLU", "XLB", "XLK", "XLI", "XLF", "XLE", "XLP"
 VOL_TICKER = "^VIX"
 
 
+def flatten_columns(df: pd.DataFrame) -> pd.DataFrame:
+    if not isinstance(df.columns, pd.MultiIndex):
+        return df
+    flattened = []
+    for col in df.columns:
+        parts = [str(part) for part in col if str(part) != ""]
+        flattened.append(parts[0] if len(parts) == 1 else parts[0])
+    out = df.copy()
+    out.columns = flattened
+    return out
+
+
 def fetch_one(ticker: str) -> pd.DataFrame:
     df = yf.download(ticker, start=START_DATE, progress=False, auto_adjust=False)
     if df.empty:
         return df
+    df = flatten_columns(df)
     df = df.reset_index().rename(columns={
         "Date": "date",
         "Open": "open",

@@ -8,6 +8,8 @@ Predict market impact of Donald Trump posts (Twitter era + Truth Social) by fine
 - `scripts/fetch_truth_social.py` — fetch and normalize the CNN Truth Social archive into CSV/parquet.
 - `scripts/fetch_daily_market.py` — download daily OHLCV for core ETFs, sector ETFs, and VIX into parquet.
 - `scripts/clean_posts_text.py` — phase 2.1 text cleaning for Twitter and Truth Social posts.
+- `scripts/build_phase2_dataset.py` — phase 2.2/2.3 schema unification and daily market alignment.
+- `phase2_alignment_decisions.md` — documented alignment/filtering rules for reproducibility.
 
 ## Data note
 - Twitter corpus is intentionally limited to the in-office period (2017-01-20 to 2021-01-08); pre-office tweets are out of scope for this project.
@@ -36,6 +38,14 @@ Predict market impact of Donald Trump posts (Twitter era + Truth Social) by fine
 	- Removes URLs, strips `@`/`#` symbols while keeping token text, drops non-ASCII noise, and normalizes whitespace.
 	- Preserves cleaned original case in `text_clean`, adds lowercase companion `text_lower`, and flags ALL CAPS usage.
 	- Writes `data/processed/tweets_cleaned.parquet` and `data/processed/truth_social_posts_cleaned.parquet`.
+
+### Run phase 2.2 and 2.3 dataset build
+- `pip install pandas`
+- `python scripts/build_phase2_dataset.py`
+	- Unifies Twitter and Truth Social posts into one schema with UTC timestamps, engagement fields, text length, repost filtering, and chronological ordering.
+	- Drops reposts and posts with fewer than 10 cleaned characters.
+	- Aligns posts to the applicable daily market session using SPY trading dates and merges VIX, SPY, QQQ, and DIA daily fields.
+	- Writes `data/processed/posts_unified.parquet` and `data/processed/posts_market_aligned_daily.parquet`.
 
 ## Project scope (high level)
 - Collect and clean Trump tweets (2009–2021) and Truth Social posts (2022–present).

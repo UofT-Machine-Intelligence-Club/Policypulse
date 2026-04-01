@@ -52,20 +52,20 @@
 - [x] Flag and handle posts that are just media shares with no meaningful text (drop or label separately)
 
 ### 2.2 Schema unification
-- [ ] Create a unified post schema: post_id, datetime (UTC), text, source_platform (twitter/truthsocial), likes, shares, engagement (likes + shares), device, text_length
-- [ ] Convert all timestamps to UTC with timezone-aware datetime objects
-- [ ] Sort chronologically and reset index
-- [ ] Drop posts with fewer than 10 characters of text
-- [ ] Filter out retweets and re-truths (keep original posts only)
-- [ ] Log the final count and date range of the unified dataset
+- [x] Create a unified post schema: post_id, datetime (UTC), text, source_platform (twitter/truthsocial), likes, shares, engagement (likes + shares), device, text_length
+- [x] Convert all timestamps to UTC with timezone-aware datetime objects
+- [x] Sort chronologically and reset index
+- [x] Drop posts with fewer than 10 characters of text
+- [x] Filter out retweets and re-truths (keep original posts only)
+- [x] Log the final count and date range of the unified dataset
 
 ### 2.3 Market data alignment
-- [ ] Merge daily VIX data onto the post dataset by date
-- [ ] Merge daily SPY/QQQ/DIA close prices onto the post dataset by date
-- [ ] For intraday data: align each post to the nearest market timestamp at or after post time using merge_asof
-- [ ] Handle posts outside market hours: map to next market open
-- [ ] Handle weekend/holiday posts: map to the following trading day's open
-- [ ] Document every alignment decision for reproducibility
+- [x] Merge daily VIX data onto the post dataset by date
+- [x] Merge daily SPY/QQQ/DIA close prices onto the post dataset by date
+- [x] For intraday data: align each post to the nearest market timestamp at or after post time using merge_asof
+- [x] Handle posts outside market hours: map to next market open
+- [x] Handle weekend/holiday posts: map to the following trading day's open
+- [x] Document every alignment decision for reproducibility
 
 ---
 
