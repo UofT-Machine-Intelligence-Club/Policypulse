@@ -26,12 +26,12 @@
 - [x] Save all daily data as parquet files with consistent datetime indexing
 
 ### 1.4 Market data — intraday
-- [ ] Determine which paid API to use (Alpha Vantage vs Polygon.io vs Twelve Data) based on budget and data quality
-- [ ] Pull minute-level or 5-minute-level SPY data for the critical window (Jan 2017 – Jan 2021) when tweets most moved markets
+- [x] Choose a no-paid-API path: use `yfinance` for free rolling intraday bars and accumulate locally over time
+- [ ] Pull minute-level or 5-minute-level SPY data for the available rolling window and keep appending locally under `data/processed/market/intraday/`
 - [ ] Pull equivalent intraday data for QQQ and DIA
-- [ ] If budget is limited, start with yfinance's free 60-day intraday data and build a daily caching script to accumulate going forward
+- [x] Build a `yfinance`-based intraday caching script to accumulate free data going forward
 - [ ] Validate intraday data: check for gaps, after-hours coverage, pre-market coverage
-- [ ] Save intraday data partitioned by month for manageable file sizes
+- [x] Save intraday data partitioned by month for manageable file sizes
 
 ### 1.5 Supplementary data
 - [ ] Get a FRED API key and pull: federal funds rate (FEDFUNDS), CPI (CPIAUCSL), unemployment rate (UNRATE)
