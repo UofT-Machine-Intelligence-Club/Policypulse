@@ -7,6 +7,7 @@ Predict market impact of Donald Trump posts (Twitter era + Truth Social) by fine
 - `overview.ipynb` — detailed model training guide (FinBERT + features, labeling, evaluation).
 - `scripts/fetch_truth_social.py` — fetch and normalize the CNN Truth Social archive into CSV/parquet.
 - `scripts/fetch_daily_market.py` — download daily OHLCV for core ETFs, sector ETFs, and VIX into parquet.
+- `scripts/fetch_intraday_market.py` — pull free rolling intraday ETF bars from `yfinance`, validate coverage, and cache month-partitioned parquet files.
 - `scripts/clean_posts_text.py` — phase 2.1 text cleaning for Twitter and Truth Social posts.
 - `scripts/build_phase2_dataset.py` — phase 2.2/2.3 schema unification and daily market alignment.
 - `phase2_alignment_decisions.md` — documented alignment/filtering rules for reproducibility.
@@ -31,6 +32,14 @@ Predict market impact of Donald Trump posts (Twitter era + Truth Social) by fine
 - `python scripts/fetch_daily_market.py`
 	- Downloads daily OHLCV starting 2009-01-01 for SPY, QQQ, DIA; sector ETFs XLU/XLB/XLK/XLI/XLF/XLE/XLP/XLY/XLC/SMH; and ^VIX.
 	- Saves per-ticker parquet files under `data/processed/market/daily/` with columns ticker, date (UTC), open/high/low/close/adj_close/volume.
+
+### Run phase 1.4 intraday market data
+- `pip install yfinance pandas`
+- `python scripts/fetch_intraday_market.py`
+	- Pulls free rolling intraday OHLCV for `SPY`, `QQQ`, and `DIA` using `yfinance` with `5m` bars and extended-hours coverage enabled by default.
+	- Validates coverage by day, reports missing or partial regular-session bars, and flags intra-session timestamp gaps.
+	- Saves month-partitioned parquet files under `data/processed/market/intraday/<TICKER>/YYYY-MM.parquet`.
+	- Important limitation: Yahoo intraday history is only available as a recent rolling window, so this script is meant to be run repeatedly to accumulate local history going forward rather than backfill 2017–2021 minute bars.
 
 ### Run phase 2.1 text cleaning
 - `pip install pandas`

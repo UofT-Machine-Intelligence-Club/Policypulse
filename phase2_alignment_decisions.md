@@ -60,5 +60,6 @@ Intraday files are not in the repository yet, but the intended rule for phase 2 
 - Sort posts and intraday bars by timestamp.
 - Use a forward `merge_asof` so each post is aligned to the nearest market timestamp at or after the post time.
 - For posts outside market hours, first map the post to the next market open, then run the forward intraday alignment from that timestamp.
+- The free ingestion path uses `scripts/fetch_intraday_market.py`, which caches recent `yfinance` bars into `data/processed/market/intraday/<TICKER>/YYYY-MM.parquet` for incremental local accumulation.
 
 That rule matches the daily alignment behavior and is the rule to use once phase 1.4 intraday data is added.
